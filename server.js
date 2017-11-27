@@ -1,13 +1,12 @@
 var http = require("http");
 var taskInfo = require("./myinfo.js");
+var express = require("express");
+var toDo = require("./todo-routes.js");
+var app = express();
 
-console.log(taskInfo.info[1]);
+app.use(express.static(__dirname + "/public"));
+app.use("/", toDo);
 
-http.createServer(onRequest).listen(3000);
-
-function onRequest(request, response) {
-response.writeHead(200, { "Content-type": "text/plain" });
-var randomElement = Math.floor(Math.random() * taskInfo.info.length);
-response.write(taskInfo.info[randomElement]);
-response.end();
-}
+var server = app.listen(3000, function() {
+  var port = server.address().port;
+});
